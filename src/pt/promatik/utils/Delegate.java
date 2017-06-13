@@ -8,6 +8,7 @@ import java.util.TimerTask;
 public class Delegate
 {
 	private Timer timer = null;
+	private long startTime, cancelTime = 0;
 	
 	public Delegate(Runnable runnable, int delay)
 	{
@@ -57,16 +58,20 @@ public class Delegate
 					}
 				}
 			};
+			
+			// Save start time
+			startTime = System.nanoTime();
+			
 			if(period > 0) {
-				if(delayInt > 0) 
-					timer.schedule(t, delayInt, period);
-				else
+				if(delayDate != null)
 					timer.schedule(t, delayDate, period);
-			} else {
-				if(delayInt > 0) 
-					timer.schedule(t, delayInt);
 				else
+					timer.schedule(t, delayInt, period);
+			} else {
+				if(delayDate != null)
 					timer.schedule(t, delayDate);
+				else
+					timer.schedule(t, delayInt);
 			}
 		} catch (Exception e) {
 			System.err.println("Delegate timer run exception");
@@ -77,6 +82,11 @@ public class Delegate
 	public void cancel()
 	{
 		timer.cancel();
+		cancelTime = System.nanoTime();
+	}
+	
+	public int elapsedTime() {
+		return Math.round(((cancelTime == 0 ? System.nanoTime() : cancelTime) - startTime) / 1000000f);
 	}
 	
 	public static Delegate run(Runnable runnable, int delay)
