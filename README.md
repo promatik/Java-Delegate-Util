@@ -5,7 +5,7 @@ Easy way to add timer events to java
 
 Run every 10 seconds starting in 10 seconds
 ```java
-Delegate.run(() -> myFunction(), 10000, 10000);
+Delegate.run(() -> runEveryTenSeconds(), 10, 10, TimeUnit.SECONDS);
 ```
 
 >```
@@ -15,7 +15,7 @@ Delegate.run(() -> myFunction(), 10000, 10000);
 
 Run once, in 5 seconds
 ```java
-Delegate.run(() -> myFunction(), 5000);
+Delegate.run(() -> myFunction(), 5, TimeUnit.SECONDS);
 ```
 
 >```
@@ -24,7 +24,7 @@ Delegate.run(() -> myFunction(), 5000);
 
 Inline code
 ```java
-Delegate.run(() -> Utils.log(String.valueOf(i++) + "s"), 0, 1000);
+Delegate.run(() -> Utils.log(String.valueOf(i++) + "s"), 0, 1, TimeUnit.SECONDS);
 ```
 
 >```
@@ -36,7 +36,7 @@ Delegate.run(() -> Utils.log(String.valueOf(i++) + "s"), 0, 1000);
 Stop delegate
 
 ```java
-Delegate d = Delegate.run(() -> myFunction(), 1000);
+Delegate d = Delegate.run(() -> myFunction(), 1, TimeUnit.SECONDS);
 ...
 d.cancel();
 ```
