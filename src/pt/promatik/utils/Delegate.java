@@ -58,11 +58,11 @@ public class Delegate
 
 			if(period > 0) {
 				if(delayDate != null)
-					task = executor.scheduleAtFixedRate(runnable, delayDate.getTimeInMillis() - System.currentTimeMillis(), period, unit);
+					task = executor.scheduleAtFixedRate(runnable, delayDate.getTimeInMillis() - System.currentTimeMillis(), period, TimeUnit.MILLISECONDS);
 				else
 					task = executor.scheduleAtFixedRate(runnable, delayInt, period, unit);
 			} else if(delayDate != null)
-				task = executor.schedule(runnable, delayDate.getTimeInMillis() - System.currentTimeMillis(), unit);
+				task = executor.schedule(runnable, delayDate.getTimeInMillis() - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
 			else
 				task = executor.schedule(runnable, delayInt, unit);
 		} catch (Exception e) {
