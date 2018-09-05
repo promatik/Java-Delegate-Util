@@ -65,7 +65,7 @@ public class Delegate {
 
 			if (period > 0) {
 				if (delayDate != null)
-					task = executor.scheduleAtFixedRate(runnable, delayDate.getTimeInMillis() - System.currentTimeMillis(), period, TimeUnit.MILLISECONDS);
+					task = executor.scheduleAtFixedRate(runnable, delayDate.getTimeInMillis() - System.currentTimeMillis(), TimeUnit.MILLISECONDS.convert(period, unit), TimeUnit.MILLISECONDS);
 				else
 					task = executor.scheduleAtFixedRate(runnable, delayInt, period, unit);
 			}
@@ -87,8 +87,10 @@ public class Delegate {
 	}
 
 	public void cancel() {
-		executor.shutdown();
-		task.cancel(true);
+		if (executor != null) {
+			executor.shutdown();
+			task.cancel(true);
+		}
 		cancelTime = System.nanoTime();
 	}
 
